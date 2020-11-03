@@ -22,5 +22,16 @@ namespace AppData.Controllers
             var path = System.Web.Hosting.HostingEnvironment.MapPath("/");
             System.IO.File.WriteAllText(path + "../app/data/event/" + id + ".json", eventData.ToString(Formatting.None));
         }
+
+        // private jArray getAllJsonEventsAsArray()
+        // {
+        //     var path = System.Web.Hosting.HostingEnvironment.MapPath("/");
+        //     var contents = "";
+        //     foreach (var file in System.IO.Directory.GetFiles(path + '../app/data/event/'))
+        //     {
+        //         contents += System.IO.File.ReadAllText(file) + ",";
+        //     }
+        //     return JArray.Parse("[" + contents.Substring(0, contents.length - 1) + "]")
+        // }
     }
 }

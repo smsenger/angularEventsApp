@@ -1,19 +1,34 @@
 'use strict';
 
 var eventsApp = angular.module('eventsApp', ['ngResource', 'ngRoute'])
-    //config called when app 1st bootstrapped by angular/when it's being configured
-    .config(function ($routeProvider) {
+    .config(function($routeProvider, $locationProvider) {
         $routeProvider.when('/newEvent',
             {
-                templateUrl: 'templates/NewEvent.html',
+                templateUrl:'templates/NewEvent.html',
                 controller: 'EditEventController'
             });
+        $routeProvider.when('/events',
+            {
+                templateUrl: 'templates/EventList.html',
+                controller: 'EventListController'
+            });
+        $routeProvider.when('/event/:eventId',
+            {
+                templateUrl: 'templates/EventDetails.html',
+                controller: 'EventController',
+                resolve: {
+                    event: function($route, eventData) {
+                        return eventData.getEvent($route.current.pathParams.eventId).$promise;
+                    }
+                }
+            });
+        $routeProvider.when('/sampleDirective',
+            {
+                templateUrl: 'templates/SampleDirective.html',
+                controller: 'SampleDirectiveController'
+            })
+        $routeProvider.otherwise({redirectTo: '/events'});
+
+        $locationProvider.html5Mode(true);
+
     });
-
-    //can keep chaining methods on the config module
-    // .factory('myCache', function ($cacheFactory) {
-
-    //     //capacity is 3 entries. if >3 entered, the first one will be eliminated first, and so forth, to make room for new entries
-    //     return $cacheFactory('myCache', { capacity: 3 })
-    // });
-
